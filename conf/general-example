@@ -1,0 +1,12 @@
+<?php
+// This file general-example is a template config file.
+// Edit this, and copy it to a file called general.
+
+// *******************************************************************************
+// MySQL database.
+define ("DB_HOST", "localhost");
+define ("DB_USER", "username");
+define ("DB_PASSWORD", "password");
+define ("DB_NAME", "scenic");
+
+
