@@ -4,9 +4,9 @@
 
 // *******************************************************************************
 // MySQL database.
-define ("DB_HOST", "localhost");
-define ("DB_USER", "username");
-define ("DB_PASSWORD", "password");
-define ("DB_NAME", "scenic");
+define ("SCENIC_DB_HOST", "localhost");
+define ("SCENIC_DB_USER", "username");
+define ("SCENIC_DB_PASSWORD", "password");
+define ("SCENIC_DB_NAME", "scenic");
 
 
