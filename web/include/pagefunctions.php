@@ -87,11 +87,11 @@ function header_box()
    ?>
    
    <ul>
-      <li id="menu_logo"><a href="/scenic"><img src="assets/scenicornot.jpg" alt="Scenic Or Not" /></a></li>
+      <li id="menu_logo"><a href="/"><img src="assets/scenicornot.jpg" alt="Scenic Or Not" /></a></li>
       
-      <li id="menu_home" class="menu"><a href="/scenic">Home</a></li>
-      <li id="menu_faq" class="menu"><a href="/scenic/faq">FAQ</a></li>
-      <li id="menu_top10" class="menu"><a href="/scenic/leaderboard">Leaderboard</a></li>
+      <li id="menu_home" class="menu"><a href="/">Home</a></li>
+      <li id="menu_faq" class="menu"><a href="/faq">FAQ</a></li>
+      <li id="menu_top10" class="menu"><a href="/leaderboard">Leaderboard</a></li>
 
    <?
 }
