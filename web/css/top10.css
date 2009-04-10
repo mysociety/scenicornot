@@ -1,0 +1,62 @@
+#top10,
+#bottom10
+{  
+   width: 250px;
+   
+   font-size: 0.85em;
+   
+   padding-bottom: 20px;
+}
+
+#top10
+{
+   float: left;
+   padding-left: 20px;
+   
+}
+
+#bottom10
+{
+   float: right;
+   padding-right: 20px;
+}
+
+.place_text
+{
+   width: 150px;
+   
+   padding: 0 0 0 5px;
+   
+   float: left;
+}
+
+.place 
+{
+   padding: 10px 0 0 0;
+   clear: both;
+}
+
+.place img
+{
+   float: left;
+   width: 90px;  
+   
+   border: 2px solid white;
+}
+
+.rating_num
+{
+   position: relative;
+   
+   top: 0;
+   left: 0;
+   
+   z-index: 1;
+}
+
+.rating_num img
+{
+   width: auto;
+   border: none;
+   
+}
