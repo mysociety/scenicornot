@@ -18,20 +18,18 @@
       </p>
       
       <div id="top10">
-         <img src="assets/top5.jpg" alt="Top 10 Most Scenic Places" />
-         
          <? 
+         $rank = 1;
          foreach($top5 as $place):         
-            display_place($place);
+            display_place($place, $rank++);
          endforeach; 
          ?>
       </div>
       <div id="bottom10">
-         <img src="assets/bottom5.jpg" alt="Bottom 10 Least Scenic Places" />
-         
          <? 
+         $rank = 1;
          foreach($bottom5 as $place):         
-            display_place($place);
+            display_place($place, $rank++);
          endforeach; 
          ?>
       </div>

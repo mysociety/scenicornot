@@ -1,29 +1,37 @@
 #top10,
 #bottom10
 {  
-   width: 250px;
+   width: 230px;
    
    font-size: 0.85em;
-   
+   padding-top:50px;
    padding-bottom: 20px;
+   margin-bottom:10px;
 }
 
 #top10
 {
    float: left;
    padding-left: 20px;
+
+   background: #d9d1aa url('../assets/top_5_banner.jpg') no-repeat;
    
+   margin-left:30px !important;
+   margin-left:15px;
 }
 
 #bottom10
 {
-   float: right;
-   padding-right: 20px;
+   float: left;
+   padding-left: 20px;
+
+   background: #d9d1aa url('../assets/bottom_5_banner.jpg') no-repeat;
+   margin-left:20px;
 }
 
 .place_text
 {
-   width: 150px;
+   width: 130px;
    
    padding: 0 0 0 5px;
    
@@ -34,6 +42,8 @@
 {
    padding: 10px 0 0 0;
    clear: both;
+   position:relative;
+   
 }
 
 .place img
@@ -44,19 +54,31 @@
    border: 2px solid white;
 }
 
-.rating_num
-{
-   position: relative;
-   
-   top: 0;
-   left: 0;
-   
-   z-index: 1;
+/* =============== */
+/* = clearfixing = */
+/* =============== */
+
+/* Hides from IE-mac \*/
+* html .place {height: 1%;}
+/* End hide from IE-mac */
+
+
+.place:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
 }
 
-.rating_num img
-{
-   width: auto;
-   border: none;
-   
+.place img.rank_no{
+  position:absolute;
+  top:0px;
+  left:-13px;
+
+  width:27px;
+  height:27px;
+
+  border:none;
 }
+
