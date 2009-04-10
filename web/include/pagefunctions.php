@@ -45,14 +45,14 @@ function head($title, $styles = array(), $javascripts = array(), $head_tags = ar
    </head>
    
    <body>
-   <div id="beta_message_wrap">
+  <!-- <div id="beta_message_wrap">
       <div id="beta_message">
             <h3>ScenicOrNot is in beta</h3>
             We're still testing the site, but we think it's already fun so we wanted to get it out there.<br />
             There's lots of stuff that we'd like to fix, including some really horrible CSS.  
             In the meantime, if you find bugs or you have any feedback, please <a href="contact@thedextrousweb.com">email us</a>.   
       </div>
-   </div>
+   </div> -->
    
    <div id="page_wrap">
    
