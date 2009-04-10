@@ -23,13 +23,7 @@
             This site was built by <a href="http://www.thedextrousweb.com">The 
             Dextrous Web</a> for <a href="http://www.mysociety.org">mySociety.org</a>
          </dd>
-         
-         <dt>Are you going to add more things?</dt>
-         <dd>
-            Yes! We'll be adding a page to display the top 10 prettiest and ugliest places
-            we've found so far. We also plan to add some way to get the data out, so that 
-            you can use it yourselves. Watch this space.
-      
+               
          <dt>Where are all the pictures from?</dt>
          <dd>
             The lovely people at <a href="http://www.geograph.co.uk">www.geograph.co.uk</a>
@@ -40,8 +34,9 @@
             We want to gather a freely available nation-wide dataset of
             scenicness. We want to use it for a secret project, but we're happy to
             make all the data available for other people to use under a Creative
-            Commons or other re-use friendly license. Suggestions for which one we
-            should use welcome.
+            Commons or other re-use friendly license. 
+            
+            <p>Suggestions for which one we should use are welcome.</p>
          </dd>
       
          <dt>How do I get in touch?</dt>
@@ -50,16 +45,19 @@
          <dt>How long will it take before the dataset is available?</dt>
          <dd>            
             That all depends on how many people play the game, and how fast.
-            There are 217,000 images (one for each of nearly 95% of the 1km grid
+            
+            <p>There are 217,000 images (one for each of nearly 95% of the 1km grid
             squares in the UK), and we're making sure each one is rated 3 times by
             different people, to help limit abuse, or the impact of people with
-            *terrible* taste. So the game has to be played a total of about .75
-            million times before the dataset is ready for first use.
+            terrible taste.</p>
+            
+            We'll make the dataset available in a 
+            few weeks, by which time it should be big enough to be useful for something.
          </dd>
          
          <dt>What if a photo is unrepresentative of the scenicness of a grid square?</dt>
          <dd>
-            At first, there's nothing we can do. When and if we hit 0.75
+            At first, there's nothing we can do. When and if we hit 651,000
             million plays we can add a different photo for each grid square, and
             hopefully that will help even out bad photos.
          </dd>

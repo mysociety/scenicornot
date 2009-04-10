@@ -21,12 +21,10 @@
             </div>
             <? else: ?>
             <div id="intro">
-               We built ScenicOrNot to find the prettiest 
-               places in the UK.
-               
-               <p>To play, give this picture marks out of 
-               10. Click a number and we'll record your vote
-               and find another picture for you to rate.</p>              
+               ScenicOrNot helps you to explore every corner of 
+               England, Scotland and Wales, all the while 
+               comparing your aesthetic judgements with fellow 
+               players.           
             </div>
          <? endif; ?>
       </div>
