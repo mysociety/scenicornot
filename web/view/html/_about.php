@@ -57,7 +57,7 @@
          
          <dt>What if a photo is unrepresentative of the scenicness of a grid square?</dt>
          <dd>
-            At first, there's nothing we can do. When and if we hit 651,000
+            At first, there's nothing we can do. When we hit 651,000
             million plays we can add a different photo for each grid square, and
             hopefully that will help even out bad photos.
          </dd>
