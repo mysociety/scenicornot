@@ -37,7 +37,7 @@
 
 <div id="content">
    <div id="rate">
-      <form id="rate_form" action="/scenic/" method="post">
+      <form id="rate_form" action="/" method="post">
       <div>
          <img id="not" src="assets/not-scenic.jpg" alt="Not Scenic" />
       
@@ -66,7 +66,7 @@
          <div id="left" style="height: <?=($image_height);?>px;"></div>
          <div id="right" style="height: <?=($image_height);?>px;"></div>
          <img id="picture" src="<?=$image_link;?>" alt="<?=$place->title;?>" />
-         <div id="bottom"><img src="assets/pictureframe-bl.jpg" class="left" alt="tl" /><img src="assets/pictureframe-br.jpg" class="right" alt="tr" /></div>
+         <div id="bottom"><img src="assets/pictureframe-bl.png" class="left" alt="bl" /><div id="bottom-middle" style="width: <?=$image_width;?>px;"></div><img src="assets/pictureframe-br.png" class="right" alt="br" /></div>
       </div>
    </div>
    

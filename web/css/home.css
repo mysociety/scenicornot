@@ -121,9 +121,16 @@ input
    #frame #bottom
    {
       height: 18px;
-      background: url('../assets/pictureframe-b.jpg') repeat-x;
       
       clear: both;
+   }
+   
+   #frame #bottom-middle
+   {
+      height: 18px;
+      background: url('../assets/pictureframe-b.jpg') repeat-x;
+      
+      float: left;
    }
    
    #frame #right
