@@ -1,11 +1,17 @@
 table
 {
-   width: 100%;
+   width: 90%;
 }
 
 #summary
 {
    font-size: 1.3em;
    
-   margin: 20px 0 50px 0;
+   margin: 0 0 0px 50px;
+}
+
+th
+{
+   text-align: left;
+   padding-top: 20px;
 }

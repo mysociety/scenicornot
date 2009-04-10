@@ -30,6 +30,7 @@ RewriteEngine on
 
 RewriteRule ^faq/? ?action=about [NC,L]
 RewriteRule ^leaderboard/? ?action=top10 [NC,L]
+RewriteRule ^stats/? ?action=rankings [NC,L]
 RewriteRule ^view-([0-9]+).* ?action=view&place=$1 [NC,L]
 RewriteRule ^view-g-([0-9]+).* ?action=view&geograph_id=$1 [NC,L]
 

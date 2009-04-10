@@ -2,42 +2,6 @@
 
 include ROOT . "/app/helper/h_place.php";
 
-$subMySQL = clone $mySQL;
-
-$rankings = $places = $votes = array();
-
-$mySQL->query("select distinct place from vote");
-while($place = $mySQL->fetchObject())
-{
-   $rankings[$place->place] = round($mySQL->singleValueQuery("select avg(rating) from vote where place=$place->place"), 1);
-}
-
-arsort($rankings);
-
-$count = 0;
-
-foreach($rankings as $place_id => $ranking)
-{
-   if($place_id)
-   {
-      $mySQL->query("select * from place where id=$place_id");
-      $place = $mySQL->fetchObject();
-      
-      if($place->votes >= 3)
-      {
-         $places[$place->id] = $place;
-         
-         $mySQL->query("select * from vote where place=$place->id order by date_submitted desc limit 0,1");
-         $votes[$place->id] = $mySQL->fetchObject();
-      }
-   }
-   
-   if(++$count >= 100)
-   {
-      break;
-   }
-}
-
 //
 // Work out some stats
 //
