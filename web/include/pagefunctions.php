@@ -65,10 +65,8 @@ function head($title, $styles = array(), $javascripts = array(), $head_tags = ar
 function foot()
 {
    ?>
-   
-      </div>
       <div class="clear"></div>
-      
+      </div>
    </div>
      
    <div id="footer_wrapper">
