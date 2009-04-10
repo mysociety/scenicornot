@@ -1,5 +1,7 @@
 <?php
 
+define('ROOT', dirname(__FILE__));
+
 include ROOT . '/include/global.php';
 
 $route = sanitise($_REQUEST, array(
