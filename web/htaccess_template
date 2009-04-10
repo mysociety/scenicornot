@@ -1,0 +1,35 @@
+# prepend.php is in the document root for the site. Set its path here.
+php_value auto_prepend_file <path_to>/prepend.php
+
+
+#
+# Deny access to sensitive things
+#
+
+<Files .htaccess>
+   order deny,allow
+   deny from all
+</Files> 
+
+<Files htaccess-template>
+   order deny,allow
+   deny from all
+</Files> 
+
+<Files schema.sql>
+   order deny,allow
+   deny from all
+</Files>
+
+
+#
+# Pretty URLs
+#
+
+RewriteEngine on
+
+RewriteRule ^faq/? ?action=about [NC,L]
+RewriteRule ^leaderboard/? ?action=top10 [NC,L]
+RewriteRule ^view-([0-9]+).* ?action=view&place=$1 [NC,L]
+RewriteRule ^view-g-([0-9]+).* ?action=view&geograph_id=$1 [NC,L]
+
