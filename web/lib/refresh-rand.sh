@@ -1,6 +1,6 @@
-#!/usr/local/bin/bash
+#!/bin/bash
 
-cd /data/vhost/games.mysociety.org/docs/scenic/lib
-/usr/local/bin/php refresh-rand.php > refresh-rand.log
+cd /data/vhost/scenic.mysociety.org/mysociety/scenic/web/lib
+/usr/bin/php refresh-rand.php > refresh-rand.log
 
 
