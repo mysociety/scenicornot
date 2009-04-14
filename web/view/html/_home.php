@@ -68,6 +68,15 @@
       </div>
    </div>
    
-  <div id="license"><a href="<?=$place->geograph_uri;?>">Photo</a> by <a href="<?=$place->creator_uri;?>"><?=$place->creator;?></a> (<a href="<?=$place->license_uri;?>">Licence</a>)</div>
+  <div id="license">
+     <a href="<?=$place->geograph_uri;?>">Photo</a> by <a href="<?=$place->creator_uri;?>"><?=$place->creator;?></a> (<a href="<?=$place->license_uri;?>">Licence</a>
+        
+     <? if($_SERVER['REMOTE_ADDR'] == '77.86.122.155'): ?>
+     <p>
+         We've noticed that you've been playing this game a lot of times - thanks!
+         Would you mind dropping us a line to <a href="mailto:team@mysociety.org">team@mysociety.org</a> to chat about it?
+     </p>
+     <? endif; ?>
+  </div>
 </div>
 <? foot(); ?>
