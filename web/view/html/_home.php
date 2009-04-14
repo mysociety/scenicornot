@@ -69,7 +69,7 @@
    </div>
    
   <div id="license">
-     <a href="<?=$place->geograph_uri;?>">Photo</a> by <a href="<?=$place->creator_uri;?>"><?=$place->creator;?></a> (<a href="<?=$place->license_uri;?>">Licence</a>
+     <a href="<?=$place->geograph_uri;?>">Photo</a> by <a href="<?=$place->creator_uri;?>"><?=$place->creator;?></a> (<a href="<?=$place->license_uri;?>">Licence</a>)
         
      <? if($_SERVER['REMOTE_ADDR'] == '77.86.122.155'): ?>
      <p>

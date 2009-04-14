@@ -37,10 +37,12 @@
          <td>
             <img src="http://chart.apis.google.com/chart?chs=200x100&cht=gom&chd=t:<?=$stats['percentage_rated'];?>" alt="<?=$stats['percentage_rated'];?> percent complete" />
          </td>
-         <!--<td>
-            <a href="<?=$graph_uri;?>"><img src="<?=$graph_uri;?>" width="100" alt="Distribution Graph" /></a>
-         </td>-->
       </tr>
+      <!--<tr>
+         <td colspan="2">
+            <a href="<?=$graph_uri;?>"><img src="<?=$graph_uri;?>" width="100" alt="Distribution Graph" /></a>
+         </td>
+      </tr> -->
       </table>
    </div>
    
