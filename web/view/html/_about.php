@@ -26,7 +26,7 @@
                
          <dt>Where are all the pictures from?</dt>
          <dd>
-            The lovely people at <a href="http://www.geograph.co.uk">www.geograph.co.uk</a>
+            The lovely people at <a href="http://www.geograph.org.uk">Geograph</a>
          </dd>
       
          <dt>Why did you build it?</dt>
