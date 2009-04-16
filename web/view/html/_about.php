@@ -21,12 +21,12 @@
          <dt>Who built it?</dt>
          <dd>
             This site was built by <a href="http://www.thedextrousweb.com">The 
-            Dextrous Web</a> for <a href="http://www.mysociety.org">mySociety.org</a>
+            Dextrous Web</a> for <a href="http://www.mysociety.org">mySociety</a>.
          </dd>
                
          <dt>Where are all the pictures from?</dt>
          <dd>
-            The lovely people at <a href="http://www.geograph.org.uk">Geograph</a>
+            The lovely people at <a href="http://www.geograph.org.uk">Geograph</a>.
          </dd>
       
          <dt>Why did you build it?</dt>
@@ -40,7 +40,7 @@
          </dd>
       
          <dt>How do I get in touch?</dt>
-         <dd>Email <a href="mailto:team@mysociety.org">team@mysociety.org</a></dd>
+         <dd>Email <a href="mailto:team&#64;mysociety.org">team&#64;mysociety.org</a>.</dd>
       
          <dt>How long will it take before the dataset is available?</dt>
          <dd>            

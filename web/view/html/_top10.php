@@ -35,7 +35,7 @@
       </div>
       
       <p class="clear content">
-         If you want to hear news about ScenicOrNot and MySociety's other projects, 
+         If you want to hear news about ScenicOrNot and mySociety's other projects, 
          please <a href="https://secure.mysociety.org/admin/lists/mailman/listinfo/news">sign up for our email newsletter</a>.
       </p>
    </div>

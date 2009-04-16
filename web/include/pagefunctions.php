@@ -71,7 +71,7 @@ function foot()
      
    <div id="footer_wrapper">
       <div id="footer">
-         <p>A mini project built for <a href="http://www.mysociety.org">MySociety</a>. <a href="mailto:team@mysociety.org">Contact us</a></p>
+         <p>A mini-project for <a href="http://www.mysociety.org">mySociety</a>. <a href="mailto:team&#64;mysociety.org">Contact us</a>.</p>
       </div>
    </div>
    
