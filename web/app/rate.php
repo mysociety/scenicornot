@@ -5,6 +5,7 @@ include_once ROOT . "/app/helper/h_place.php";
 $params = sanitise($_REQUEST, array(
    'uuid' => STRING_ENCODED,
    'token' => STRING_ENCODED,
+   'auth' => STRING_ENCODED,
    'place' => NUMBER,
    'rating' => NUMBER,
    'rating_1_x' => NUMBER,
@@ -50,14 +51,34 @@ if(!$params['uuid'])
 // These are both wtf errors -- someone's probably messing about.
 //
 
-if(!isset($_SESSION['place']))
+if(!$params['place'])
 {
    // Doesn't return
    error_page(
-      '500 Internal Server Error',
-      'Error: couldn\'t retrieve place from session',
-      'Have you enabled cookies for this site? ScenicOrNot requires cookies to be enabled.');
+      '400 Bad Request',
+      'Error: <em>place</em> is a required parameter',
+      'We couldn\' tell which place you want to rate.');
 }
+
+if(!$params['token'])
+{
+   // Doesn't return
+   error_page(
+      '401 Unauthorized',
+      'Error: <em>token</em> is a required parameter',
+      'We need it to stop people cheating!');
+}
+
+
+if(!$params['auth'])
+{
+   // Doesn't return
+   error_page(
+      '401 Unauthorized',
+      'Error: <em>auth</em> is a required parameter',
+      'We need it to stop people cheating!');
+}
+
 
 if(!$params['rating'])
 {
@@ -90,91 +111,106 @@ if(!$params['rating'])
    }
 }
 
-if($_SESSION['token'] == $params['token'])
+//
+// Find the place
+//
+
+try
+{
+   $mySQL->query("select * from place where id={$params['place']}");
+   $place = $mySQL->fetchObject();
+}
+catch(MySQLException $e)
+{
+   // Doesn't return
+   error_page(
+      '500 Internal Server Error',
+      'Error: We couldn\'t fetch the place',
+      'A database error ocurred.');
+}
+
+if(!$place)
+{
+   // Doesn't return
+   error_page(
+      '404 Not Found',
+      'Error: The specified place was not found',
+      'We couldn\'t find a place with that ID');
+}
+
+
+//
+// Check that they've supplied an authorised place
+//
+
+$auth = make_auth($params['place'], $params['token']);
+
+
+if($params['auth'] != $auth)
+{
+   // Doesn't return
+   error_page(
+      '403 Forbidden',
+      'Error: The supplied authorisation hash is not valid',
+      '');
+}
+
+
+//
+// Create the vote
+//
+
+try
 {
    //
-   // Find the place
+   // Only record their vote if they haven't rated this place already
    //
    
-   try
-   {
-      $mySQL->query("select * from place where id={$_SESSION['place']}");
-      $place = $mySQL->fetchObject();
-   }
-   catch(MySQLException $e)
-   {
-      // Doesn't return
-      error_page(
-         '500 Internal Server Error',
-         'Error: We couldn\'t fetch the place',
-         'A database error ocurred.');
-   }
-   
-   if(!$place)
-   {
-      // Doesn't return
-      error_page(
-         '404 Not Found',
-         'Error: The specified place was not found',
-         'We couldn\'t find a place with that ID');
-   }
-   
-   
-   //
-   // Create the vote
-   //
-   
-   try
+   $mySQL->query("select id from vote where uuid='{$params['uuid']}' and place={$place->id}");
+   if(!$mySQL->numRows())
    {
       //
-      // Only record their vote if they haven't rated this place already
+      // Insert the vote, and update the vote count
       //
       
-      $mySQL->query("select id from vote where uuid='{$params['uuid']}' and place={$place->id}");
-      if(!$mySQL->numRows())
+      $mySQL->query("insert into vote(place, uuid, rating, token, ip, user_agent) values({$place->id}, '{$params['uuid']}', {$params['rating']}, '{$params['token']}', '{$_SERVER['REMOTE_ADDR']}', '{$_SERVER['HTTP_USER_AGENT']}')");
+      $mySQL->query("delete from token where token='{$params['token']}' limit 1");
+      
+      if(!$mySQL->affectedRows())
       {
-         //
-         // Insert the vote, and update the vote count
-         //
-         
-         $mySQL->query("insert into vote(place, uuid, rating, ip, user_agent) values({$place->id}, '{$params['uuid']}', {$params['rating']}, '{$_SERVER['REMOTE_ADDR']}', '{$_SERVER['HTTP_USER_AGENT']}')");
-         
-         if(!$mySQL->affectedRows())
-         {
-            // Doesn't return              
-            error_page('500 Internal Server Error', 'We tried to record your vote, but it didn\'t work', 'A database error ocurred.');
-         }
-         else
-         {
-            $mySQL->query("update place set votes=votes+1 where id={$place->id}");
-            $place->votes++;
-         }
+         // Doesn't return              
+         error_page('500 Internal Server Error', 'We tried to record your vote, but it didn\'t work', 'A database error ocurred.');
+      }
+      else
+      {
+         $mySQL->query("update place set votes=votes+1 where id={$place->id}");
+         $place->votes++;
       }
    }
-   catch(MySQLException $e)
-   {
-      // Doesn't return
-      error_page('500 Internal Server Error', 'Error: We couldn\'t record your vote', 'A database error ocurred.');
-   }
-   
-   //
-   // Save this place, and its current rating, for display in the view
-   //
-   
-   $rated_place = $place;
-   unset($place);
-   
-   $rated_image_link = local_image($rated_place->image_uri);
+}
+catch(MySQLException $e)
+{
+   // Doesn't return
+   error_page('500 Internal Server Error', 'Error: We couldn\'t record your vote', 'A database error ocurred.');
+}
 
-   try
-   {
-      $average_rating = round($mySQL->singleValueQuery("select avg(rating) from vote where place={$rated_place->id}"), 1);
-   }
-   catch(MySQLException $e)
-   {
-      // Doesn't return
-      error_page('500 Internal Server Error', 'Error: we couldn\'t get the place\'s current rating', 'A database error ocurred.');
-   }
+//
+// Save this place, and its current rating, for display in the view
+//
+
+$rated_place = $place;
+unset($place);
+
+$rated_image_link = local_image($rated_place->image_uri);
+
+try
+{
+   $average_rating = round($mySQL->singleValueQuery("select avg(rating) from vote where place={$rated_place->id}"), 1);
+}
+catch(MySQLException $e)
+{
+   // Doesn't return
+   error_page('500 Internal Server Error', 'Error: we couldn\'t get the place\'s current rating', 'A database error ocurred.');
 }
 
 

@@ -52,7 +52,9 @@
          
          <img id="hot" src="assets/very-scenic.jpg" alt="Very Scenic" />
          
+         <input type="hidden" name="place" value="<?=$place->id;?>" />
          <input type="hidden" name="token" value="<?=$token;?>" />
+         <input type="hidden" name="auth" value="<?=$auth;?>" />
          <input name="action" type="hidden" value="rate" />
       </div>
       </form>

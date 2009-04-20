@@ -6,6 +6,8 @@
    overflow: auto;
    color: #554841;
    font-size: 1.1em;
+   
+   min-height: 430px;
 }
 
 #generic .content

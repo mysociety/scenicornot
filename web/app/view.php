@@ -50,23 +50,10 @@ try
    $place['score'] = round($mySQL->singleValueQuery("select avg(rating) from vote where place={$place['id']}"), 1);
    $place['image_link'] = local_image($place['image_uri']);
    
-   $dims = image_dims($place['image_uri']);  
-   
-   $image_width = $dims[0];
-   $image_height = $dims[1];
-   
-   if($image_width > 450)
-   {
-      $factor = $image_width / 450;
-      
-      $image_width = 450;
-      $image_height = round($image_height/$factor);
-   }
+   list($image_width, $image_height) = image_dims($place['image_uri']);  
 }
 catch(Exception $e)
-{
-   // TODO: Go to an error message view
-   
+{   
    error_page('500 Internal Server Error', 'Error: couldn\'t retrieve the place', 'A database error ocurred.' . $e->getMessage());
 }
 

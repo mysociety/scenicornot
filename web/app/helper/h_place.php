@@ -82,7 +82,7 @@ function pick_place($uuid)
    
    $mySQL->seek(rand(0, $mySQL->numRows()-1));
    
-  // $mySQL->query("select * from place where id=158195");
+   //$mySQL->query("select * from place where id=158195");
    
    $place = $mySQL->fetchObject();
    
@@ -135,7 +135,21 @@ function image_dims($image_uri)
    
    $dims = getimagesize($config['site']['image_sysdir'] . $img_path);
    
-   return array($dims[0], $dims[1]);
+   $image_width = $dims[0];
+   $image_height = $dims[1];
+   
+   $factor = $image_width / 450;
+   
+   $image_width = 450;
+   $image_height = round($image_height/$factor);
+   
+   return array($image_width, $image_height);
 }
 
+function make_auth($place, $token)
+{
+   global $config;
+   
+   return hash('ripemd160', $config['site']['secret'] . $place . $token);
+}
 ?>

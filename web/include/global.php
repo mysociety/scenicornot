@@ -20,7 +20,4 @@ $mySQL = new MySQL($config['mySQL']['server'], $config['mySQL']['username'], $co
 
 error_reporting(E_ALL);
 
-session_set_cookie_params(60*60*24*365);
-session_start();
-
 ?>

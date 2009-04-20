@@ -4,7 +4,6 @@ include_once ROOT . "/app/helper/h_place.php";
 
 $params = sanitise($_REQUEST, array(
    'uuid' => STRING_ENCODED,
-   'token' => STRING_ENCODED,
 ));
 
 
@@ -27,29 +26,33 @@ if(!$params['uuid'])
 try
 {
    $place = pick_place($params['uuid']);   
-   $_SESSION['place'] = $place->id;
    
-   $token = $_SESSION['token'] = rand();
+   try
+   {
+      do
+      {      
+         $token = rand();
+      }   
+      while(
+         $mySQL->singleValueQuery("select token from token where token='$token'") ||
+         $mySQL->singleValueQuery("select id from vote where token='$token'")
+      );
+
+      $mySQL->query("insert into token(token) values('$token')");
+   }
+   catch(MySQLException $e)
+   {     
+      error_page('500 Internal Server Error', 'Error: couldn\'t generate token', 'A database error ocurred.');
+   }
+   
+   $auth = make_auth($place->id, $token);
    
    $image_link = local_image($place->image_uri);
    
-   $dims = image_dims($place->image_uri);  
-   
-   $image_width = $dims[0];
-   $image_height = $dims[1];
-   
-   if($image_width > 450)
-   {
-      $factor = $image_width / 450;
-      
-      $image_width = 450;
-      $image_height = round($image_height/$factor);
-   }
+   list($image_width, $image_height) = image_dims($place->image_uri);  
 }
 catch(Exception $e)
-{
-   // TODO: Go to an error message view
-   
+{   
    error_page('500 Internal Server Error', 'Error: couldn\'t pick a place', 'A database error ocurred.');
 }
 

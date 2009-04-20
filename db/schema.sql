@@ -19,7 +19,7 @@
 -- Table structure for table `place`
 --
 
-DROP TABLE IF EXISTS `place`;
+-- DROP TABLE IF EXISTS `place`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `place` (
@@ -51,11 +51,20 @@ CREATE TABLE `place` (
 ) ENGINE=MyISAM AUTO_INCREMENT=217675 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
+-- 
+-- Table structure for table `token`
+-- 
+
+CREATE TABLE `token` (
+  `token` varchar(16) NOT NULL,
+  PRIMARY KEY  (`token`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 --
 -- Table structure for table `vote`
 --
 
-DROP TABLE IF EXISTS `vote`;
+-- DROP TABLE IF EXISTS `vote`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `vote` (
@@ -63,11 +72,13 @@ CREATE TABLE `vote` (
   `place` int(11) NOT NULL,
   `uuid` varchar(64) NOT NULL,
   `rating` int(11) default NULL,
+  `token` varchar(16) NOT NULL,
   `ip` varchar(16) NOT NULL,
   `user_agent` varchar(255) NOT NULL,
   `date_submitted` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   KEY `place` (`place`)
+  KEY `token` (`token`)
 ) ENGINE=MyISAM AUTO_INCREMENT=226 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
