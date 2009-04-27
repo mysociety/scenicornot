@@ -47,7 +47,8 @@ CREATE TABLE `place` (
   KEY `votes` (`votes`),
   KEY `gridsquare` (`gridsquare`),
   KEY `rand` (`rand`),
-  KEY `geograph_uri` (`geograph_uri`(333))
+  KEY `geograph_uri` (`geograph_uri`(333)),
+  KEY `votes_rand_idx` (`votes`,`rand`)
 ) ENGINE=MyISAM AUTO_INCREMENT=217675 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
