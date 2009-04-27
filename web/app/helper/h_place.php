@@ -22,6 +22,7 @@ function pick_place($uuid)
       echo "<pre>";
    }
    
+   $limit = 10000;
    
    //
    // Try to pick a new image with sufficient votes (this will almost always work)
@@ -37,7 +38,7 @@ function pick_place($uuid)
       
       order by rand
       
-      limit 0,20
+      limit 0,$limit
    ", DEBUG);
     
    
@@ -47,14 +48,16 @@ function pick_place($uuid)
    
    if(!$mySQL->numRows())
    {
+      // place.id not in (select place from vote where uuid = '{$uuid}')
       $mySQL->query("
          select * from place
                  
-         where place.id not in (select place from vote where uuid = '{$uuid}')
+         where
+	    votes = 0 
          
          order by rand
          
-         limit 0,20
+         limit 0,$limit
       ", DEBUG);
       
       
@@ -66,7 +69,7 @@ function pick_place($uuid)
       
       if(!$mySQL->numRows())
       {
-         $mySQL->query("select * from place order by rand limit 0,20", DEBUG);
+         $mySQL->query("select * from place order by rand limit 0,$limit", DEBUG);
          
          
          //
@@ -114,7 +117,8 @@ function local_image($image_uri)
       
       if(!copy($image_uri, $config['site']['image_sysdir'] . $img_path))
       {
-         error_page('500 Internal Server Error', 'Unable to retrieve image from Geograph', 'Either the image no longer exists at Geograph, or the server is misconfigured (is the directory writeable?)');
+         return false;
+#         error_page('500 Internal Server Error', 'Unable to retrieve image from Geograph', 'Either the image no longer exists at Geograph, or the server is misconfigured (is the directory writeable?)');
       }
    }
    

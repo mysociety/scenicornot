@@ -1,23 +1,34 @@
 <?php
 
-include "../prepend.php";
-
+include "../web/prepend.php";
 include ROOT . "/include/global.php";
 
-echo date('r') . " Updating rand column... \n";
+ini_set('display_errors', 1);
+
+echo date('r') . " Fetching places... \n";
 
 //
 // This is lots of queries instead of one big one
 // so that the table doesn't get locked (and stop the
 // site from working) while this update happens
 //
-
-$mySQL->query("select * from place");
+$mySQL->query("select * from place where rand < 1");
 $subMySQL = clone $mySQL;
+
+echo date('r') . " Updating rand column\n";
 
 while($place = $mySQL->fetchObject())
 {
-   $subMySQL->query("update place set rand=rand() where id=$place->id");
+   if($place->votes > 3)
+   {
+      $rand = 1;
+   }
+   else
+   {
+      $rand = "rand()";
+   }
+
+   $subMySQL->query("update place set rand=$rand where id=$place->id");
 }
 
 

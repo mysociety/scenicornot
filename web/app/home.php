@@ -25,8 +25,15 @@ if(!$params['uuid'])
 
 try
 {
-   $place = pick_place($params['uuid']);   
-   
+   $image_link = false;
+
+   do
+   {
+      $place = pick_place($params['uuid']);   
+      $image_link = local_image($place->image_uri);
+   }
+   while($image_link === false);
+
    try
    {
       do
@@ -47,7 +54,7 @@ try
    
    $auth = make_auth($place->id, $token);
    
-   $image_link = local_image($place->image_uri);
+  // $image_link = local_image($place->image_uri);
    
    list($image_width, $image_height) = image_dims($place->image_uri);  
 }
