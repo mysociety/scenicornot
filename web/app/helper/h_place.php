@@ -21,8 +21,20 @@ function pick_place($uuid)
    {
       echo "<pre>";
    }
-   
-   $limit = 10000;
+
+    /* Matthew 2009-04-27 
+    # First, let's just try some short-circuits
+    for ($k=1; $k<=5; $k++) {
+        $rand = rand(1, 217674); # XXX
+        $mySQL->query("select *, (select count(*) from vote where place=place.id) as votes from place where id=$rand");
+        $place = $mySQL->fetchObject();
+        if ($place->votes <= 3) {
+            return $place;
+        }
+    }
+     Matthew 2009-04-27 */   
+
+   $limit = 100;
    
    //
    // Try to pick a new image with sufficient votes (this will almost always work)
@@ -40,7 +52,12 @@ function pick_place($uuid)
       
       limit 0,$limit
    ", DEBUG);
-    
+
+/*   $mySQL->query("
+     select place.* from place       where              place.id not in (select place from vote where uuid = '{$uuid}')          and (select count(*) from vote where vote.place=place.id) <= 3       order by rand       limit 0,$limit
+   ", DEBUG);*/
+
+
    
    //
    // If that didn't work, just pick one that the user hasn't seen
@@ -82,8 +99,13 @@ function pick_place($uuid)
          }
       }
    }
-   
+  
    $mySQL->seek(rand(0, $mySQL->numRows()-1));
+
+//   for($i = 0; $i < rand(0, $mySQL->numRows()-1); $i++)
+//   { 
+//      $mySQL->fetchObject();
+//   }
    
    //$mySQL->query("select * from place where id=158195");
    

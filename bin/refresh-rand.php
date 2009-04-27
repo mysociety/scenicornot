@@ -29,6 +29,7 @@ while($place = $mySQL->fetchObject())
    }
 
    $subMySQL->query("update place set rand=$rand where id=$place->id");
+   usleep(100000);
 }
 
 

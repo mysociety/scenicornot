@@ -183,8 +183,10 @@ try
       }
       else
       {
-         $mySQL->query("update place set votes=votes+1 where id={$place->id}");
-         $place->votes++;
+         //$mySQL->query("update place set votes=votes+1 where id={$place->id}");
+
+         $mySQL->query("select * from vote where place=$place->id");
+         $place->votes = $mySQL->numRows();
       }
    }
 }

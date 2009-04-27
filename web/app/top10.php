@@ -14,12 +14,12 @@ function get_places($places)
          $mySQL->query("select * from place where id=$place_id");
          $place = $mySQL->fetchArray();
          
-         if($place['votes'] >= 3)
-         {            
-            $places[$place_id] = $place;
-            $places[$place_id]['score'] = $ranking;            
-            $places[$place_id]['image_link'] = local_image($places[$place_id]['image_uri']);
-         }
+         $places[$place_id] = $place;
+         $places[$place_id]['score'] = $ranking;            
+         $places[$place_id]['image_link'] = local_image($places[$place_id]['image_uri']);
+
+         $mySQL->query("select * from vote where place=$place_id");
+         $places[$place_id]['votes'] = $mySQL->numRows();
       }
    }
 
@@ -68,7 +68,7 @@ while($place = $mySQL->fetchObject())
 
 $stats['total_places'] = $mySQL->singleValueQuery("select count(*) from place");
 $stats['total_votes'] = $mySQL->singleValueQuery("select count(*) from vote");
-$stats['total_users'] = $mySQL->singleValueQuery("select count(distinct uuid) from vote");
+//$stats['total_users'] = $mySQL->singleValueQuery("select count(distinct uuid) from vote");
 
 // The percentage of images with 3 or more votes
 $stats['percentage_rated'] = round($stats['total_rated'] / $stats['total_places'] * 100, 2);
