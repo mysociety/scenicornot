@@ -22,17 +22,17 @@ function pick_place($uuid)
       echo "<pre>";
    }
 
-    /* Matthew 2009-04-27 
     # First, let's just try some short-circuits
+/*
     for ($k=1; $k<=5; $k++) {
         $rand = rand(1, 217674); # XXX
-        $mySQL->query("select *, (select count(*) from vote where place=place.id) as votes from place where id=$rand");
+        $mySQL->query("select *, (select count(*) from vote where place=place.id) as votes from place where id=$rand and id not in (select place from vote where uuid='$uuid')");
         $place = $mySQL->fetchObject();
-        if ($place->votes <= 3) {
+        if ($place && $place->votes <= 3) {
             return $place;
         }
     }
-     Matthew 2009-04-27 */   
+*/
 
    $limit = 100;
    
@@ -41,24 +41,16 @@ function pick_place($uuid)
    //
    
    $mySQL->query("
-      select place.* from place
-      
+      select * from place
       where
              place.id not in (select place from vote where uuid = '{$uuid}')
-         and place.votes >= 1
-         and place.votes <= 3
-      
+         and (select count(*) from vote where place=place.id) >= 1
+         and (select count(*) from vote where place=place.id) <= 3
       order by rand
-      
       limit 0,$limit
    ", DEBUG);
 
-/*   $mySQL->query("
-     select place.* from place       where              place.id not in (select place from vote where uuid = '{$uuid}')          and (select count(*) from vote where vote.place=place.id) <= 3       order by rand       limit 0,$limit
-   ", DEBUG);*/
 
-
-   
    //
    // If that didn't work, just pick one that the user hasn't seen
    //
@@ -68,12 +60,9 @@ function pick_place($uuid)
       // place.id not in (select place from vote where uuid = '{$uuid}')
       $mySQL->query("
          select * from place
-                 
          where
-	    votes = 0 
-         
+	    (select count(*) from vote where place=place.id) = 0 
          order by rand
-         
          limit 0,$limit
       ", DEBUG);
       
@@ -102,13 +91,6 @@ function pick_place($uuid)
   
    $mySQL->seek(rand(0, $mySQL->numRows()-1));
 
-//   for($i = 0; $i < rand(0, $mySQL->numRows()-1); $i++)
-//   { 
-//      $mySQL->fetchObject();
-//   }
-   
-   //$mySQL->query("select * from place where id=158195");
-   
    $place = $mySQL->fetchObject();
    
    if(DEBUG)
