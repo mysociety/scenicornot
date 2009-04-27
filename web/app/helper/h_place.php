@@ -22,24 +22,9 @@ function pick_place($uuid)
       echo "<pre>";
    }
 
-    # First, let's just try some short-circuits
-/*
-    for ($k=1; $k<=5; $k++) {
-        $rand = rand(1, 217674); # XXX
-        $mySQL->query("select *, (select count(*) from vote where place=place.id) as votes from place where id=$rand and id not in (select place from vote where uuid='$uuid')");
-        $place = $mySQL->fetchObject();
-        if ($place && $place->votes <= 3) {
-            return $place;
-        }
-    }
-*/
-
    $limit = 100;
    
-   //
-   // Try to pick a new image with sufficient votes (this will almost always work)
-   //
-   
+   # Try to pick a new image with 1-3 votes, to get it up to 4
    $mySQL->query("
       select * from place
       where
@@ -50,43 +35,48 @@ function pick_place($uuid)
       limit 0,$limit
    ", DEBUG);
 
+   # If that fails, quickly try a few entries from the database at random
+   if (!$mySQL->numRows()) {
+        for ($k=1; $k<=5; $k++) {
+            $rand = rand(1, 217674); # XXX
+            $mySQL->query("select *, (select count(*) from vote where place=place.id) as votes
+                from place where id=$rand and id not in (select place from vote where uuid='$uuid')");
+            $place = $mySQL->fetchObject();
+            if ($place && $place->votes <= 3) {
+                return $place;
+            }
+        }
+   }
 
-   //
-   // If that didn't work, just pick one that the user hasn't seen
-   //
-   
+   # If that didn't work, just pick one that the user hasn't seen
    if(!$mySQL->numRows())
    {
-      // place.id not in (select place from vote where uuid = '{$uuid}')
       $mySQL->query("
          select * from place
          where
 	    (select count(*) from vote where place=place.id) = 0 
+            and id not in (select place from vote where uuid = '{$uuid}')
          order by rand
          limit 0,$limit
       ", DEBUG);
-      
-      
-      //
-      // And if that didn't work, just pick one at random -- or perhaps, since their votes wouldn't be
-      // recorded, this should say "There are no more pictures"? Almost certainly moot -- terribly 
-      // unlikely that anyone will ever get here.
-      //
-      
-      if(!$mySQL->numRows())
-      {
+   } 
+
+   //
+   // And if that didn't work, just pick one at random -- or perhaps, since their votes wouldn't be
+   // recorded, this should say "There are no more pictures"? Almost certainly moot -- terribly 
+   // unlikely that anyone will ever get here.
+   //
+   if(!$mySQL->numRows())
+   {
          $mySQL->query("select * from place order by rand limit 0,$limit", DEBUG);
-         
-         
-         //
-         // And if that didn't work, something broke.
-         //
-         
-         if(!$mySQL->numRows())
-         {
-            throw new Exception("Unable to find a place");
-         }
-      }
+   }      
+
+   //
+   // And if that didn't work, something broke.
+   //
+   if(!$mySQL->numRows())
+   {
+      throw new Exception("Unable to find a place");
    }
   
    $mySQL->seek(rand(0, $mySQL->numRows()-1));
