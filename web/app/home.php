@@ -25,15 +25,23 @@ if(!$params['uuid'])
 
 try
 {
+   $try_limit = 4;
    $image_link = false;
 
    do
    {
       $place = pick_place($params['uuid']);   
       $image_link = local_image($place->image_uri);
+      
+      $try_limit--;
    }
-   while($image_link === false);
+   while($image_link === false && $try_limit != 0);
 
+   if($try_limit == 0)
+   {
+      error_page('503 Service Unavailable', 'There was a problem fetching the place', 'We can\'t contact Geograph in order to retrieve the picture. Please try again later.');
+   }
+   
    try
    {
       do

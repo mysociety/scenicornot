@@ -174,7 +174,6 @@ try
       //
       
       $mySQL->query("insert into vote(place, uuid, rating, token, ip, user_agent) values({$place->id}, '{$params['uuid']}', {$params['rating']}, '{$params['token']}', '{$_SERVER['REMOTE_ADDR']}', '{$_SERVER['HTTP_USER_AGENT']}')");
-      $mySQL->query("delete from token where token='{$params['token']}' limit 1");
       
       if(!$mySQL->affectedRows())
       {

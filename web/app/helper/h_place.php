@@ -13,94 +13,105 @@
 
 function pick_place($uuid)
 {
-   global $mySQL;
+   global $mySQL, $config;
    
    define('DEBUG', false);
+   define('TRY_PARTIALS', true);
+   $limit = 20;
    
-   if(DEBUG)
-   {
-      echo "<pre>";
-   }
+   if(DEBUG) { echo "<pre>"; }
+   if(DEBUG && TRY_PARTIALS) { echo "Trying to get a partial\n"; }
 
-
-       for ($k=1; $k<=5; $k++) {
-            $rand = rand(1, 217674); # XXX
-            $mySQL->query("select *, (select count(*) from vote where place=place.id) as votes
-                from place where id=$rand and id not in (select place from vote where uuid='$uuid')");
-            $place = $mySQL->fetchObject();
-            if ($place && $place->votes <= 3) {
-                return $place;
-            }
-        }
-
-   $limit = 100;
    
-   # Try to pick a new image with 1-3 votes, to get it up to 4
-   $mySQL->query("
-      select * from place
-      where
-             place.id not in (select place from vote where uuid = '{$uuid}')
-         and (select count(*) from vote where place=place.id) >= 1
-         and (select count(*) from vote where place=place.id) <= 3
-      order by rand
-      limit 0,$limit
-   ", DEBUG);
-
-   # If that fails, quickly try a few entries from the database at random
-   if (!$mySQL->numRows()) {
-        for ($k=1; $k<=5; $k++) {
-            $rand = rand(1, 217674); # XXX
-            $mySQL->query("select *, (select count(*) from vote where place=place.id) as votes
-                from place where id=$rand and id not in (select place from vote where uuid='$uuid')");
-            $place = $mySQL->fetchObject();
-            if ($place && $place->votes <= 3) {
-                return $place;
-            }
-        }
-   }
-
-   # If that didn't work, just pick one that the user hasn't seen
-   if(!$mySQL->numRows())
+   //
+   // Pick a random place with less than 3 votes
+   //
+   
+   for($k=1; $k<=$limit; $k++)
    {
+      $rand = rand(1, $config['site']['place_count']);
+      
       $mySQL->query("
-         select * from place
-         where
-	    (select count(*) from vote where place=place.id) = 0 
-            and id not in (select place from vote where uuid = '{$uuid}')
-         order by rand
-         limit 0,$limit
+         select 
+            *, (select count(*) from vote where place=place.id) as vote_count
+         from place 
+         where 
+                id=$rand
+            and id not in (select place from vote where uuid='$uuid')
       ", DEBUG);
-   } 
-
+      
+      $place = $mySQL->fetchObject();
+      
+      if(DEBUG) { print_r($place);} 
+      
+      if($place && $place->vote_count <= 3 && (!TRY_PARTIALS || $place->vote_count > 0)) 
+      {
+         if(DEBUG) { echo "Got place < 3 votes\n"; }
+         
+         return $place;
+      }
+   }
+   
+   
    //
-   // And if that didn't work, just pick one at random -- or perhaps, since their votes wouldn't be
-   // recorded, this should say "There are no more pictures"? Almost certainly moot -- terribly 
-   // unlikely that anyone will ever get here.
+   // If that didn't work, just pick a random place the user hasn't seen
    //
-   if(!$mySQL->numRows())
+   
+   for($k=1; $k<=$limit; $k++)
    {
-         $mySQL->query("select * from place order by rand limit 0,$limit", DEBUG);
-   }      
+      $rand = rand(1, $config['site']['place_count']);
+      
+      $mySQL->query("
+         select *
+         from place 
+         where 
+                id=$rand 
+            and id not in (select place from vote where uuid='$uuid')
+      ", DEBUG);
+      
+      $place = $mySQL->fetchObject();
+      
+      if($place) 
+      {
+         if(DEBUG) { echo "Got unseen place\n"; print_r($place); }
+         return $place;
+      }
+   }
+   
+   
+   //
+   // If they've already seen everything (!) just pick a place at random.
+   //
+   
+   for($k=1; $k<=$limit; $k++)
+   {
+      $rand = rand(1, $config['site']['place_count']);
+      
+      $mySQL->query("
+         select * 
+         from place 
+         where id=$rand 
+      ", DEBUG);
+      
+      $place = $mySQL->fetchObject();
+      
+      if($place) 
+      {
+         if(DEBUG) { echo "Got random place\n"; print_r($place); }
+         return $place;
+      }
+   }
 
    //
    // And if that didn't work, something broke.
    //
    if(!$mySQL->numRows())
    {
+      if(DEBUG) { echo "Got nothing.\n"; }
       throw new Exception("Unable to find a place");
    }
   
-   $mySQL->seek(rand(0, $mySQL->numRows()-1));
-
-   $place = $mySQL->fetchObject();
-   
-   if(DEBUG)
-   {
-      echo "Got: "; print_r($place);
-      echo "</pre>";
-   }
-   
-   return $place;
+   return false;
 }
 
 function local_image($image_uri)
@@ -123,7 +134,7 @@ function local_image($image_uri)
       if(!copy($image_uri, $config['site']['image_sysdir'] . $img_path))
       {
          return false;
-#         error_page('500 Internal Server Error', 'Unable to retrieve image from Geograph', 'Either the image no longer exists at Geograph, or the server is misconfigured (is the directory writeable?)');
+//         error_page('500 Internal Server Error', 'Unable to retrieve image from Geograph', 'Either the image no longer exists at Geograph, or the server is misconfigured (is the directory writeable?)');
       }
    }
    

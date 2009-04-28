@@ -29,6 +29,7 @@ function get_places($places)
 
 
 $rankings = $places = $votes = array();
+$stats['total_rated'] = $stats['partially_rated'] = 0;
 
 $mySQL->query("select place, count(place) as vote_count, avg(rating) as score from vote group by place");
 while($place = $mySQL->fetchObject())
@@ -36,6 +37,15 @@ while($place = $mySQL->fetchObject())
    if($place->vote_count > 3)
    {
       $rankings[$place->place] = round($place->score, 1);
+   }
+   
+   if($place->vote_count >= 3)
+   {
+      $stats['total_rated']++;
+   }
+   else
+   {
+      $stats['partially_rated']++;
    }
 }
 
@@ -51,24 +61,8 @@ $bottom5 = get_places(array_slice($rankings, 0, 5, true));
 // Work out some stats
 //
 
-$stats['total_rated'] = $stats['partially_rated'] = 0;
-
-$mySQL->query("select place, count(place) as vote_count from vote group by place");
-while($place = $mySQL->fetchObject())
-{
-   if($place->vote_count >= 3)
-   {
-      $stats['total_rated']++;
-   }
-   else
-   {
-      $stats['partially_rated']++;
-   }
-}
-
-$stats['total_places'] = $mySQL->singleValueQuery("select count(*) from place");
+$stats['total_places'] = $config['site']['place_count'];
 $stats['total_votes'] = $mySQL->singleValueQuery("select count(*) from vote");
-//$stats['total_users'] = $mySQL->singleValueQuery("select count(distinct uuid) from vote");
 
 // The percentage of images with 3 or more votes
 $stats['percentage_rated'] = round($stats['total_rated'] / $stats['total_places'] * 100, 2);

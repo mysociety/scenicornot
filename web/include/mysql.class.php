@@ -76,7 +76,25 @@ class MySQL
 
       return $this->lastResult;
    }
+   
+   public function unbuffered_query($query, $printQuery = false)
+   {
+      if($printQuery)
+      {
+         echo $query;
+      }
 
+      $this->lastQuery = $query;
+      $this->lastResult = mysql_unbuffered_query($query, $this->linkId);
+
+      if($this->lastResult == false)
+      {
+         throw new MySQLException($query);
+      }
+
+      return $this->lastResult;
+   }
+     
    public function singleValueQuery($query, $printQuery = false)
    {
       if($printQuery)
