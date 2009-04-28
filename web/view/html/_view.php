@@ -34,6 +34,13 @@
          <div id="bottom"><img src="assets/pictureframe-bl.png" class="left" alt="bl" /><div id="bottom-middle" style="width: <?=$image_width;?>px;"></div><img src="assets/pictureframe-br.png" class="right" alt="br" /></div>
       </div>
    </div>
+
+<? if($_SERVER['REMOTE_ADDR'] == '128.40.214.194'): ?>
+     <p style="color: black; width: 400px; margin-left: 100px;">
+       Dear Mr/Ms UCL Scraping Person: You're filling up my inbox with automatic error reports! We'll happily provide a dump of the data you're after, whatever it is -- please do <a href="mailto:contact@thedextrousweb.com">get in touch</a>. Thanks.
+     </p>
+     <? endif; ?>
+
    
   <div id="license"><a href="<?=$place['geograph_uri'];?>">Photo</a> by <a href="<?=$place['creator_uri'];?>"><?=$place['creator'];?></a> (<a href="<?=$place['license_uri'];?>">License</a>)</div>
 </div>
