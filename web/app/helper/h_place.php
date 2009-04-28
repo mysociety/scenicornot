@@ -22,6 +22,18 @@ function pick_place($uuid)
       echo "<pre>";
    }
 
+/*  // Harry, 28/04 08:40: there are currently 48k partials, so limiting this to places with >1 vote for now
+
+       for ($k=1; $k<=5; $k++) {
+            $rand = rand(1, 217674); # XXX
+            $mySQL->query("select *, (select count(*) from vote where place=place.id) as votes
+                from place where id=$rand and id not in (select place from vote where uuid='$uuid')");
+            $place = $mySQL->fetchObject();
+            if ($place && $place->votes <= 3) {
+                return $place;
+            }
+        }
+*/
    $limit = 100;
    
    # Try to pick a new image with 1-3 votes, to get it up to 4
