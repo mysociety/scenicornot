@@ -173,7 +173,7 @@ try
       // Insert the vote, and update the vote count
       //
       
-      $mySQL->query("insert into vote(place, uuid, rating, token, ip, user_agent) values({$place->id}, '{$params['uuid']}', {$params['rating']}, '{$params['token']}', '{$_SERVER['REMOTE_ADDR']}', '{$_SERVER['HTTP_USER_AGENT']}')");
+      $mySQL->query("insert into vote(place, uuid, rating, token, ip, user_agent) values({$place->id}, '{$params['uuid']}', {$params['rating']}, '{$params['token']}', '{$_SERVER['REMOTE_ADDR']}', '" . addslashes($_SERVER['HTTP_USER_AGENT']) . "')");
       
       if(!$mySQL->affectedRows())
       {
