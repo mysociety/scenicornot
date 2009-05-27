@@ -50,6 +50,9 @@ try
    $place['score'] = round($mySQL->singleValueQuery("select avg(rating) from vote where place={$place['id']}"), 1);
    $place['image_link'] = local_image($place['image_uri']);
    
+   $mySQL->query("select rating from vote where place={$place['id']}");
+   $place['votes'] = $mySQL->numRows();
+
    list($image_width, $image_height) = image_dims($place['image_uri']);  
 }
 catch(Exception $e)
