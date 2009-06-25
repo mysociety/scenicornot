@@ -9,7 +9,7 @@
    <div id="generic">
       <img src="assets/generic-top.jpg" alt="------------" />
       
-      <h2>Leaderboard</h2>
+      <h1>Leaderboard</h1>
       
       <p class="content">
          This page shows the current prettiest and ugliest places, according to your
