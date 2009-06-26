@@ -7,7 +7,7 @@
  * Copyright (c) 2009 UK Citizens Online Democracy. All rights reserved.
  * Email: matthew@mysociety.org. WWW: http://www.mysociety.org/
  *
- * $Id: generate-tsv.php,v 1.3 2009-06-26 08:25:15 matthew Exp $
+ * $Id: generate-tsv.php,v 1.4 2009-06-26 08:26:59 matthew Exp $
  *
  */
 
@@ -23,7 +23,7 @@ $mySQL->query("select place, lat, lon, avg(rating), group_concat(rating) from vo
 
 $out = '';
 while ($row = $mySQL->fetchArray()) {
-    $out .= join("\t", $row) . "\n";
+    $out .= "$row[0]\t$row[1]\t$row[2]\t$row[3]\t$row[4]\n";
 }
 
 $fp = fopen(ROOT . '/votes.tsv.new', 'w');
