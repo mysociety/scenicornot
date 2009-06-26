@@ -7,23 +7,23 @@
  * Copyright (c) 2009 UK Citizens Online Democracy. All rights reserved.
  * Email: matthew@mysociety.org. WWW: http://www.mysociety.org/
  *
- * $Id: generate-tsv.php,v 1.5 2009-06-26 08:29:00 matthew Exp $
+ * $Id: generate-tsv.php,v 1.6 2009-06-26 09:04:11 matthew Exp $
  *
  */
 
 include "../web/prepend.php";
 include ROOT . "/include/global.php";
 
-$mySQL->query("select place, lat, lon, avg(rating), var_pop(rating), group_concat(rating) from vote, place
+$mySQL->query("select place, lat, lon, avg(rating), var_pop(rating), group_concat(rating), geograph_uri from vote, place
     where place = place.id
         and uuid not in ('2a92cf77c3908f132b856af79f0c3267', 'fd0fd60993feaa3463c43581ee60eeba', 'd2947b36351a635e7381a17a5b22b0ba')
     group by place
     having count(rating) >= 3
 ");
 
-$out = '';
+$out = "ID,Lat,Lon,Average,Variance,Votes,Geograph URI\n";
 while ($row = $mySQL->fetchArray()) {
-    $out .= "$row[0]\t$row[1]\t$row[2]\t$row[3]\t$row[4]\t$row[5]\n";
+    $out .= "$row[0]\t$row[1]\t$row[2]\t$row[3]\t$row[4]\t$row[5]\t$row[6]\n";
 }
 
 $fp = fopen(ROOT . '/votes.tsv.new', 'w');

@@ -37,7 +37,9 @@
 
 	    <p><a href="/votes.tsv">votes.tsv</a> is a <acronym title="tab separated value">TSV</acronym>
 	    file of all photos that have been rated 3 times or more. The
-	    columns are ID, lat, lon, average rating, population variance, and the votes (comma separated), and the file updates weekly.</p>
+	    columns are ID, latitude, longitude, average rating, population
+	    variance, the votes (comma separated), and the Geograph URI for the
+	    photo; the file updates weekly.</p>
             
             <p>There are 217,000 images (one for each of nearly 95% of the 1km grid
             squares in the UK), and we&rsquo;re making sure each one is rated 3 times by
