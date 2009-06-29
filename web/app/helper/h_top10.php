@@ -4,7 +4,7 @@ function display_place($place, $rank)
 {
    ?>
    <div class="place">
-      <img class="rank_no" src="assets/rank-<?=$rank;?>.png" alt="Rank Number <?=$rank;?>" />
+      <img class="rank_no" src="assets/rank-<?=$rank;?>.png" alt="<?=$rank;?>." />
       
       <a href="view-<?=$place['id'];?>-<?=preg_replace('/\W+/', '-', $place['title']);?>">
          <img src="<?=$place['image_link'];?>" alt="<?=$place['title'];?>" />
@@ -22,4 +22,3 @@ function display_place($place, $rank)
    <?
 }
 
-?>

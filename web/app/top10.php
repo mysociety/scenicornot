@@ -36,7 +36,7 @@ while($place = $mySQL->fetchObject())
 {
    if($place->vote_count > 3)
    {
-      $rankings[$place->place] = round($place->score, 1);
+      $rankings[$place->place] = array(round($place->score, 1), $place->vote_count);
    }
    
    if($place->vote_count >= 3)
@@ -49,11 +49,20 @@ while($place = $mySQL->fetchObject())
    }
 }
 
-arsort($rankings);                                         
-$top5 = get_places(array_slice($rankings, 0, 5, true));
+$num = 10;
 
-asort($rankings);
-$bottom5 = get_places(array_slice($rankings, 0, 5, true));
+arsort($rankings);
+$top = get_places(array_slice($rankings, 0, $num, true));
+
+function cmp($a, $b) {
+    if ($a[0] < $b[0]) return -1;
+    if ($a[0] > $b[0]) return 1;
+    if ($a[1] < $b[1]) return 1;
+    if ($a[1] > $b[1]) return -1;
+    return 0;
+}
+uasort($rankings, 'cmp');
+$bottom = get_places(array_slice($rankings, 0, $num, true));
 
 
 

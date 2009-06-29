@@ -20,7 +20,7 @@
       <div id="top10">
          <? 
          $rank = 1;
-         foreach($top5 as $place):         
+         foreach($top as $place):         
             display_place($place, $rank++);
          endforeach; 
          ?>
@@ -28,7 +28,7 @@
       <div id="bottom10">
          <? 
          $rank = 1;
-         foreach($bottom5 as $place):         
+         foreach($bottom as $place):         
             display_place($place, $rank++);
          endforeach; 
          ?>
