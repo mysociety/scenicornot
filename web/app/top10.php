@@ -15,7 +15,7 @@ function get_places($places)
          $place = $mySQL->fetchArray();
          
          $places[$place_id] = $place;
-         $places[$place_id]['score'] = $ranking;            
+         $places[$place_id]['score'] = $ranking[0];
          $places[$place_id]['image_link'] = local_image($places[$place_id]['image_uri']);
 
          $mySQL->query("select * from vote where place=$place_id");
@@ -51,20 +51,26 @@ while($place = $mySQL->fetchObject())
 
 $num = 10;
 
-arsort($rankings);
-$top = get_places(array_slice($rankings, 0, $num, true));
-
-function cmp($a, $b) {
+function cmp_top($a, $b) {
+    if ($a[0] < $b[0]) return 1;
+    if ($a[0] > $b[0]) return -1;
+    if ($a[1] < $b[1]) return 1;
+    if ($a[1] > $b[1]) return -1;
+    return 0;
+}
+function cmp_bottom($a, $b) {
     if ($a[0] < $b[0]) return -1;
     if ($a[0] > $b[0]) return 1;
     if ($a[1] < $b[1]) return 1;
     if ($a[1] > $b[1]) return -1;
     return 0;
 }
-uasort($rankings, 'cmp');
+
+uasort($rankings, 'cmp_top');
+$top = get_places(array_slice($rankings, 0, $num, true));
+
+uasort($rankings, 'cmp_bottom');
 $bottom = get_places(array_slice($rankings, 0, $num, true));
-
-
 
 //
 // Work out some stats
