@@ -9,4 +9,5 @@ define ("SCENIC_DB_USER", "username");
 define ("SCENIC_DB_PASS", "password");
 define ("SCENIC_DB_NAME", "scenic");
 
-
+// Email for bug reports
+define ('OPTION_BUGS_EMAIL', '');
