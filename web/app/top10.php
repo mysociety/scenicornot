@@ -37,7 +37,7 @@ $bottom = get_places($bottom);
 
 $mySQL->query("select place, count(place) as vote_count, avg(rating) as score from vote group by place having score>9 and vote_count>=3 order by score desc, vote_count desc limit $num");
 while($place = $mySQL->fetchObject()) {
-    $top[$place->place] = array(round($place->score, 1), $place->vote_count);
+    $top[$place->place] = round($place->score, 1);
     $stats['total_rated']++;
 }
 $top = get_places($top);
