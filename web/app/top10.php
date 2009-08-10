@@ -24,21 +24,24 @@ function get_places($places)
    return $places;
 }
 
-$top = $bottom = array();
 $stats = array('total_rated' => 0);
+$mySQL->query("select place from vote group by place having count(place)>=3");
+while($place = $mySQL->fetchObject()) {
+   $stats['total_rated']++;
+}
+
+$top = $bottom = array();
 $num = 10;
 
 $mySQL->query("select place, count(place) as vote_count, avg(rating) as score from vote group by place having score=1 and vote_count>=3 order by vote_count desc limit $num");
 while($place = $mySQL->fetchObject()) {
     $bottom[$place->place] = round($place->score, 1);
-    $stats['total_rated']++;
 }
 $bottom = get_places($bottom);
 
 $mySQL->query("select place, count(place) as vote_count, avg(rating) as score from vote group by place having score>9 and vote_count>=3 order by score desc, vote_count desc limit $num");
 while($place = $mySQL->fetchObject()) {
     $top[$place->place] = round($place->score, 1);
-    $stats['total_rated']++;
 }
 $top = get_places($top);
 
