@@ -9,68 +9,38 @@ function get_places($places)
    
    foreach($places as $place_id => $ranking)
    {
-      if($place_id)
-      {
-         $mySQL->query("select * from place where id=$place_id");
-         $place = $mySQL->fetchArray();
+      if (!$place_id) continue;
+      $mySQL->query("select * from place where id=$place_id");
+      $place = $mySQL->fetchArray();
          
-         $places[$place_id] = $place;
-         $places[$place_id]['score'] = $ranking[0];
-         $places[$place_id]['image_link'] = local_image($places[$place_id]['image_uri']);
+      $places[$place_id] = $place;
+      $places[$place_id]['score'] = $ranking;
+      $places[$place_id]['image_link'] = local_image($places[$place_id]['image_uri']);
 
-         $mySQL->query("select * from vote where place=$place_id");
-         $places[$place_id]['votes'] = $mySQL->numRows();
-      }
+      $mySQL->query("select * from vote where place=$place_id");
+      $places[$place_id]['votes'] = $mySQL->numRows();
    }
 
    return $places;
 }
 
-
-
-$rankings = $places = $votes = array();
-$stats['total_rated'] = $stats['partially_rated'] = 0;
-
-$mySQL->query("select place, count(place) as vote_count, avg(rating) as score from vote group by place");
-while($place = $mySQL->fetchObject())
-{
-   if($place->vote_count > 3)
-   {
-      $rankings[$place->place] = array(round($place->score, 1), $place->vote_count);
-   }
-   
-   if($place->vote_count >= 3)
-   {
-      $stats['total_rated']++;
-   }
-   else
-   {
-      $stats['partially_rated']++;
-   }
-}
-
+$top = $bottom = array();
+$stats = array('total_rated' => 0);
 $num = 10;
 
-function cmp_top($a, $b) {
-    if ($a[0] < $b[0]) return 1;
-    if ($a[0] > $b[0]) return -1;
-    if ($a[1] < $b[1]) return 1;
-    if ($a[1] > $b[1]) return -1;
-    return 0;
+$mySQL->query("select place, count(place) as vote_count, avg(rating) as score from vote group by place having score=1 and vote_count>=3 order by vote_count desc limit $num");
+while($place = $mySQL->fetchObject()) {
+    $bottom[$place->place] = round($place->score, 1);
+    $stats['total_rated']++;
 }
-function cmp_bottom($a, $b) {
-    if ($a[0] < $b[0]) return -1;
-    if ($a[0] > $b[0]) return 1;
-    if ($a[1] < $b[1]) return 1;
-    if ($a[1] > $b[1]) return -1;
-    return 0;
+$bottom = get_places($bottom);
+
+$mySQL->query("select place, count(place) as vote_count, avg(rating) as score from vote group by place having score>9 and vote_count>=3 order by score desc, vote_count desc limit $num");
+while($place = $mySQL->fetchObject()) {
+    $top[$place->place] = array(round($place->score, 1), $place->vote_count);
+    $stats['total_rated']++;
 }
-
-uasort($rankings, 'cmp_top');
-$top = get_places(array_slice($rankings, 0, $num, true));
-
-uasort($rankings, 'cmp_bottom');
-$bottom = get_places(array_slice($rankings, 0, $num, true));
+$top = get_places($top);
 
 //
 // Work out some stats
@@ -82,15 +52,8 @@ $stats['total_votes'] = $mySQL->singleValueQuery("select count(*) from vote");
 // The percentage of images with 3 or more votes
 $stats['percentage_rated'] = round($stats['total_rated'] / $stats['total_places'] * 100, 2);
 
-// The percentage of images with votes 0 < v < 3
-$stats['percentage_partial'] = round($stats['partially_rated'] / $stats['total_places'] * 100, 2);
-
 // Total land mass of 229,334km obtained here: http://en.wikipedia.org/wiki/List_of_countries_and_outlying_territories_by_area
 $stats['percentage_coverage'] = round($stats['total_places'] / 229334 * 100, 2);
-
-// The percentage of images with 3 or more votes
-$stats['percentage_rated'] = round($stats['total_rated'] / $stats['total_places'] * 100, 2);
-
 
 //
 // Go to view
