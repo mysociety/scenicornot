@@ -7,11 +7,11 @@
  * Copyright (c) 2009 UK Citizens Online Democracy. All rights reserved.
  * Email: matthew@mysociety.org. WWW: http://www.mysociety.org/
  *
- * $Id: generate-tsv.php,v 1.6 2009-06-26 09:04:11 matthew Exp $
+ * $Id: generate-tsv.php,v 1.7 2010-02-16 00:13:48 matthew Exp $
  *
  */
 
-include "../web/prepend.php";
+include dirname(__FILE__) . '/../web/prepend.php';
 include ROOT . "/include/global.php";
 
 $mySQL->query("select place, lat, lon, avg(rating), var_pop(rating), group_concat(rating), geograph_uri from vote, place
