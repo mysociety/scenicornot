@@ -15,7 +15,7 @@
          <dt>What is this site?</dt>
          <dd>
             It&rsquo;s a game &mdash; pit your aesthetic judgements against other 
-            users, and discover the lovely and not so lovely corners of the UK.
+            users, and discover the lovely and not so lovely corners of Great Britain.
          </dd>
       
          <dt>Where are all the pictures from?</dt>
@@ -42,7 +42,7 @@
 	    photo; the file updates weekly.</p>
             
             <p>There are 217,000 images (one for each of nearly 95% of the 1km grid
-            squares in the UK), and we&rsquo;re making sure each one is rated 3 times by
+            squares in Great Britain), and we&rsquo;re making sure each one is rated 3 times by
             different people, to help limit abuse, or the impact of people with
             terrible taste.</p>
          </dd>
