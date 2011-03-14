@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: scenic
 -- ------------------------------------------------------
--- Server version	5.0.75-0ubuntu7
+-- Server version	5.0.51a-24+lenny5-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -38,11 +38,11 @@ CREATE TABLE `place` (
   `gridsquare` varchar(8) NOT NULL,
   `license_uri` varchar(1024) default NULL,
   `format` varchar(32) NOT NULL,
+  `votes` int(11) NOT NULL,
+  `rand` float default NULL,
   `width` int(11) NOT NULL,
   `height` int(11) NOT NULL,
   `aspect` float NOT NULL,
-  `votes` int(11) NOT NULL,
-  `rand` float default NULL,
   PRIMARY KEY  (`id`),
   KEY `votes` (`votes`),
   KEY `gridsquare` (`gridsquare`),
@@ -52,14 +52,18 @@ CREATE TABLE `place` (
 ) ENGINE=MyISAM AUTO_INCREMENT=217675 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
--- 
+--
 -- Table structure for table `token`
--- 
+--
 
+-- DROP TABLE IF EXISTS `token`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
 CREATE TABLE `token` (
-  `token` varchar(16) NOT NULL,
+  `token` int(11) NOT NULL default '0',
   PRIMARY KEY  (`token`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `vote`
@@ -73,14 +77,15 @@ CREATE TABLE `vote` (
   `place` int(11) NOT NULL,
   `uuid` varchar(64) NOT NULL,
   `rating` int(11) default NULL,
-  `token` varchar(16) NOT NULL,
+  `token` int(11) NOT NULL,
   `ip` varchar(16) NOT NULL,
   `user_agent` varchar(255) NOT NULL,
   `date_submitted` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
-  KEY `place` (`place`)
-  KEY `token` (`token`)
-) ENGINE=MyISAM AUTO_INCREMENT=226 DEFAULT CHARSET=utf8;
+  KEY `place` (`place`),
+  KEY `token` (`token`),
+  KEY `uuid_idx` (`uuid`)
+) ENGINE=MyISAM AUTO_INCREMENT=1392496 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -92,4 +97,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-04-10 10:23:47
+-- Dump completed on 2011-03-14 18:18:40
