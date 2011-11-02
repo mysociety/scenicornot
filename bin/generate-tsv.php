@@ -21,7 +21,7 @@ $mySQL->query("select place, lat, lon, avg(rating), var_pop(rating), group_conca
     having count(rating) >= 3
 ");
 
-$out = "ID,Lat,Lon,Average,Variance,Votes,Geograph URI\n";
+$out = "ID\tLat\tLon\tAverage\tVariance\tVotes\tGeograph URI\n";
 while ($row = $mySQL->fetchArray()) {
     $out .= "$row[0]\t$row[1]\t$row[2]\t$row[3]\t$row[4]\t$row[5]\t$row[6]\n";
 }
