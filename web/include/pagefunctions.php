@@ -81,7 +81,7 @@ function foot()
 
      var _gaq = _gaq || [];
      _gaq.push(['_setAccount', 'UA-660910-9']);
-     // _gaq.push(['_gat._anonymizeIp']);
+     _gaq.push(['_gat._anonymizeIp']);
      _gaq.push(['_trackPageview']);
 
      (function() {
