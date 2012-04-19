@@ -1,5 +1,5 @@
 <?php
 
-include VIEW_DIR . "/_about.php";
+include VIEW_DIR . "/_privacy.php";
 
 ?>
