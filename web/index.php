@@ -5,11 +5,11 @@ define('ROOT', dirname(__FILE__));
 include ROOT . '/include/global.php';
 
 $route = sanitise($_REQUEST, array(
-   'action' => array(ENUM, array('home', 'rate', 'about', 'top10', 'view', 'rankings')),
+   'action' => array(ENUM, array('home', 'rate', 'about', 'privacy', 'top10', 'view', 'rankings')),
    'format' => array(ENUM, array('html')),
 ), array(
    'action' => 'home',
-   'format' => 'html',   
+   'format' => 'html',
 ));
 
 
