@@ -12,7 +12,7 @@
       <h1><?=$title;?></h1>
       <h2 class="content"><?=$heading;?></h2>
       <p class="content"><?=$error;?></p>
-      <p class="content">If this was unexpected and you haven't found a solution, please <a href="mailto:team@mysociety.org">let us know</a>.</p>
+      <p class="content">If this was unexpected and you haven't found a solution, please <a href="mailto:hello&#64;mysociety.org">let us know</a>.</p>
    </div>
    <img src="assets/generic-bottom.jpg" alt="------------" />
 </div>

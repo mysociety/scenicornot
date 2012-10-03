@@ -18,7 +18,7 @@ if(!isset($heading))
 
 if(!isset($error))
 {
-   $error = "Something went wrong. If this was unexpected, please <a href='mailto:team&#64;mysociety.org'>let us know</a>!";
+   $error = "Something went wrong. If this was unexpected, please <a href='mailto:hello&#64;mysociety.org'>let us know</a>!";
 }
 
 mail(OPTION_BUGS_EMAIL, 'ScenicOrNot error report', "http://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]?$_SERVER[QUERY_STRING]\n$title\n$heading\n$error\n\nRequest: " . print_r($_REQUEST, true) . "\nMySQL: " . mysql_error() . "\nServer: " . print_r($_SERVER, true));

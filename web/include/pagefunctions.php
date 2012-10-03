@@ -72,7 +72,7 @@ function foot()
    <div id="footer_wrapper">
       <div id="footer">
          <p>A mini-project for <a href="http://www.mysociety.org">mySociety</a>.
-            <a href="mailto:team&#64;mysociety.org">Contact us</a>.
+            <a href="mailto:hello&#64;mysociety.org">Contact us</a>.
             <a href="privacy">Privacy and cookies</a>.
          </p>
       </div>

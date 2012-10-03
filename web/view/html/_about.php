@@ -61,7 +61,7 @@
          </dd>
                
          <dt>How do I get in touch?</dt>
-         <dd>Email <a href="mailto:team&#64;mysociety.org">team&#64;mysociety.org</a>.</dd>
+         <dd>Email <a href="mailto:hello&#64;mysociety.org">hello&#64;mysociety.org</a>.</dd>
       
       </dl>
    </div>

@@ -76,7 +76,7 @@
      <? if($_SERVER['REMOTE_ADDR'] == '77.86.122.155'): ?>
      <p>
          We've noticed that you've been playing this game a lot of times - thanks!
-         Would you mind dropping us a line to <a href="mailto:team@mysociety.org">team@mysociety.org</a> to chat about it?
+         Would you mind dropping us a line to <a href="mailto:hello&#64;mysociety.org">hello&#64;mysociety.org</a> to chat about it?
      </p>
      <? endif; ?>
   </div>
