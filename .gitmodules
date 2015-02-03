@@ -1,0 +1,3 @@
+[submodule "retirement"]
+	path = retirement
+	url = git://git.mysociety.org/retirement
