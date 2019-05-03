@@ -8,6 +8,7 @@ define ("OPTION_SCENIC_DB_HOST", "localhost");
 define ("OPTION_SCENIC_DB_USER", "username");
 define ("OPTION_SCENIC_DB_PASS", "password");
 define ("OPTION_SCENIC_DB_NAME", "scenic");
+define ("OPTION_SCENIC_DB_PORT", "3306");
 
 // Email for bug reports
 define ('OPTION_BUGS_EMAIL', '');
